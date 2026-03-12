@@ -1,0 +1,115 @@
+# NCAA March Madness Machine Learning Architecture Guide
+
+To build a competitive machine learning pipeline for the NCAA March Madness predictions (often hosted on Kaggle), you need a comprehensive understanding of the tournament structure, the underlying data constraints, and a robust modeling architecture. 
+
+This guide breaks down the core concepts visually using infographics and maps out the proposed architecture you will need to predict the tournament effectively.
+
+---
+
+## 1. The Tournament Architecture (The Real-World Process)
+
+The "March Madness" tournament is a single-elimination tournament of 68 Division I teams (men's and women's). Understanding the timeline is crucial, as it dictates exactly **what data** you have prior to the tournament starting.
+
+```mermaid
+graph TD
+    A[Regular Season<br>Nov - Feb] --> B[Conference Tournaments<br>Early March]
+    B --> C(Selection Sunday<br>Mid-March)
+    
+    C -->|Assigns Seeds & Regions| D[The Tournament bracket is locked]
+    
+    D --> E[First Four<br>68 -> 64 Teams]
+    E --> F[Round 1<br>64 -> 32 Teams]
+    F --> G[Round 2<br>32 -> 16 Teams]
+    G --> H[Sweet 16]
+    H --> I[Elite 8]
+    I --> J[Final Four]
+    J --> K((Championship))
+
+    style A fill:#f9f,stroke:#333,stroke-width:2px
+    style C fill:#ff9,stroke:#333,stroke-width:4px
+    style D fill:#ddf,stroke:#333
+    style K fill:#dfd,stroke:#333,stroke-width:4px
+```
+
+> [!CAUTION]
+> **The Golden Rule of Time-Leakage:** When predicting the outcome of an NCAA Tournament game, you can **only** use data that was available on *Selection Sunday*. You absolutely cannot use tournament statistics to predict tournament games!
+
+---
+
+## 2. Core Data Explanation
+
+You are given dozens of CSV files, which roughly break down into these core entities:
+
+| Category | Relevant Files | Purpose for Modeling |
+| :--- | :--- | :--- |
+| **Identifications** | [MTeams.csv](file:///Users/Agriya/Desktop/marchmania/data/MTeams.csv), [WTeams.csv](file:///Users/Agriya/Desktop/marchmania/data/WTeams.csv), [MSeasons.csv](file:///Users/Agriya/Desktop/marchmania/data/MSeasons.csv) | Lookups for Team IDs, Team Names, and Season metadata. You must map these IDs across all datasets. |
+| **Outcomes** | `[M/W]NCAATourneyCompactResults.csv` | Ground truth! This contains historical tournament outcomes. Your model trains strictly on these past results. |
+| **In-Season Stats** | `[M/W]RegularSeasonDetailedResults.csv` | Core Feature Engine. Computes end-of-season average offensive and defensive efficiencies, aggregate rebounds, turnovers, etc. |
+| **Human Perception** | [MMasseyOrdinals.csv](file:///Users/Agriya/Desktop/marchmania/data/MMasseyOrdinals.csv) (Men's only) | Contains 100+ computer and human ranking systems calculated weekly. Used as strong baseline meta-features. |
+| **Tournament Meta** | `[M/W]NCAATourneySeeds.csv` | The seed numbers (1 through 16). Knowing the team's assigned seed is the strongest baseline indicator of their relative strength. |
+
+> [!TIP]
+> Your prediction target format is an implicit match-up: `Season_TeamA_TeamB` (where `TeamA_ID` < `TeamB_ID`). You are tasked with providing the **probability (0 to 1)** that `Team A` wins.
+
+---
+
+## 3. High-Level ML System Architecture
+
+Here is the proposed end-to-end data processing and modeling architecture for your solution:
+
+```mermaid
+flowchart LR
+    subgraph Raw Data Ingestion
+        RS[Regular Season Results]
+        Seed[Tournament Seeds]
+        Rank[Massey Rankings]
+        Hist[Historical Tourney Results]
+    end
+
+    subgraph Feature Engineering Engine
+        RS --> |Aggregate Averages| T_Stats[Per-Team Season Stats]
+        Seed --> |Parse Ints| S_Feat[Seed Features]
+        Rank --> |DayNum 133 Extract| R_Feat[Final Pre-Tourney Rankings]
+        
+        T_Stats --> |Calculate Deltas| Diff[Symmetrical Matchup Features]
+        S_Feat --> Diff
+        R_Feat --> Diff
+    end
+
+    subgraph Modeling & Validation
+        Hist --> |Provides Target| TrainSet[Historical Training Set]
+        Diff --> TrainSet
+        
+        TrainSet --> |CV Split by Season| XGB[XGBoost / LightGBM Ensembles]
+        XGB --> |Evaluated on LogLoss/Brier| Evaluator
+    end
+
+    subgraph Inference & Submission
+        XGB --> Predict[Live Prediction Generator]
+        Predict --> |Output probabilities| CSV(Submission.csv)
+    end
+```
+
+### Why Compute "Symmetrical Matchup Features"?
+
+Since the ID ordering requires `Team1 < Team2` algorithmically, predicting the probability means our features need to capture the difference between teams.
+
+Instead of passing:
+`[TeamA_Score_Avg, TeamB_Score_Avg]`
+
+We compute the Deltas:
+`[Seed_Diff, StatX_Diff]` (i.e. `SeedA - SeedB` and `StatXA - StatXB`).
+
+**Algorithmically:**
+If you feed `[X, Y]` into a model and it outputs a probability $P$ of a win, then passing `[Y, X]` should output $1 - P$. By forcing the model to learn on the *difference* between two teams, we dramatically reduce dimensionality and encourage symmetric logic.
+
+> [!IMPORTANT]
+> The evaluation metric punishes extreme confidence when wrong. Predicting `0.01` probability and being wrong results in a massive penalty. Regularizing models to stay conservative (e.g., between `0.10` and `0.90`) historically avoids catastrophic errors.
+
+---
+
+## 4. Proposed Next Engineering Steps
+
+1. **Build the Feature Aggregator (`feature_engineering.py`)**: Create a script that takes the Detailed Regular Season results, calculates team totals (Points Scored, FG%, Possessions, Offensive Rebound Rate), and generates a single row per Team per Season.
+2. **Setup the Matchup Creator (`build_dataset.py`)**: Create a script that pairs winning teams and losing teams from the historical [NCAATourneyCompactResults.csv](file:///Users/Agriya/Desktop/marchmania/data/WNCAATourneyCompactResults.csv) to calculate the *Difference in features*.
+3. **Draft the Baseline Model**: Implement a simple XGBoost algorithm that predicts tournament matches solely based on `Seed_Diff` (Difference in Tournament Seeds) and `Ranking_Diff` (Massey Rankings). This establishes your baseline Loss metric to beat!
