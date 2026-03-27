@@ -1,0 +1,120 @@
+=== FIRST FOUR ===
+SOUTH 16: LEHIGH vs PVAMU -> PVAMU
+WEST 11: NC ST vs TEXAS -> NC ST
+MIDWEST 16: HOW vs UMBC -> HOW
+MIDWEST 11: SMU vs MIA OH -> SMU
+
+================== REGIONALS ==================
+
+=== EAST REGION ===
+
+--- Round of 64 ---
+Duke             vs Siena            -> Duke             (91.7%)
+Ohio St.         vs TCU              -> Ohio St.         (52.0%)
+St. John's       vs Northern Iowa    -> St. John's       (70.4%)
+Kansas           vs Cal Baptist      -> Kansas           (86.2%)
+Louisville       vs South Florida    -> Louisville       (60.4%)
+Michigan St.     vs North Dakota St. -> Michigan St.     (82.4%)
+UCLA             vs UCF              -> UCLA             (54.0%)
+UConn            vs Furman           -> UConn            (90.8%)
+
+--- Round of 32 ---
+Duke             vs Ohio St.         -> Duke             (83.2%)
+St. John's       vs Kansas           -> Kansas           (52.6%)
+Louisville       vs Michigan St.     -> Michigan St.     (56.4%)
+UCLA             vs UConn            -> UConn            (77.3%)
+
+--- Sweet 16 ---
+Duke             vs Kansas           -> Duke             (75.6%)
+Michigan St.     vs UConn            -> UConn            (51.5%)
+
+--- Elite 8 ---
+Duke             vs UConn            -> Duke             (59.9%)
+
+=== SOUTH REGION ===
+
+--- Round of 64 ---
+Florida          vs PVAMU            -> Florida          (92.4%)
+Clemson          vs Iowa             -> Iowa             (50.3%)
+Vanderbilt       vs McNeese          -> Vanderbilt       (67.6%)
+Nebraska         vs Troy             -> Nebraska         (77.2%)
+North Carolina   vs VCU              -> North Carolina   (57.8%)
+Illinois         vs Penn             -> Illinois         (90.3%)
+Saint Mary's     vs Texas A&M        -> Saint Mary's     (69.6%)
+Houston          vs Idaho            -> Houston          (91.7%)
+
+--- Round of 32 ---
+Florida          vs Iowa             -> Florida          (73.2%)
+Vanderbilt       vs Nebraska         -> Vanderbilt       (60.9%)
+North Carolina   vs Illinois         -> Illinois         (68.4%)
+Saint Mary's     vs Houston          -> Houston          (60.2%)
+
+--- Sweet 16 ---
+Florida          vs Vanderbilt       -> Florida          (66.5%)
+Illinois         vs Houston          -> Houston          (50.7%)
+
+--- Elite 8 ---
+Florida          vs Houston          -> Florida          (55.8%)
+
+=== WEST REGION ===
+
+--- Round of 64 ---
+Arizona          vs Long Island      -> Arizona          (90.6%)
+Villanova        vs Utah St.         -> Utah St.         (60.7%)
+Wisconsin        vs High Point       -> Wisconsin        (59.1%)
+Arkansas         vs Hawaii           -> Arkansas         (85.3%)
+BYU              vs NC ST            -> BYU              (63.3%)
+Gonzaga          vs Kennesaw St.     -> Gonzaga          (87.5%)
+Miami (FL)       vs Missouri         -> Miami (FL)       (56.9%)
+Purdue           vs Queens (N.C.)    -> Purdue           (90.1%)
+
+--- Round of 32 ---
+Arizona          vs Utah St.         -> Arizona          (67.5%)
+Wisconsin        vs Arkansas         -> Arkansas         (58.2%)
+BYU              vs Gonzaga          -> Gonzaga          (68.0%)
+Miami (FL)       vs Purdue           -> Purdue           (79.7%)
+
+--- Sweet 16 ---
+Arizona          vs Arkansas         -> Arizona          (65.9%)
+Gonzaga          vs Purdue           -> Gonzaga          (53.5%)
+
+--- Elite 8 ---
+Arizona          vs Gonzaga          -> Arizona          (55.7%)
+
+=== MIDWEST REGION ===
+
+--- Round of 64 ---
+Michigan         vs HOW              -> Michigan         (90.9%)
+Georgia          vs Saint Louis      -> Saint Louis      (54.5%)
+Texas Tech       vs Akron            -> Texas Tech       (68.5%)
+Alabama          vs Hofstra          -> Alabama          (80.7%)
+Tennessee        vs SMU              -> Tennessee        (57.4%)
+Virginia         vs Wright St.       -> Virginia         (83.2%)
+Kentucky         vs Santa Clara      -> Kentucky         (56.4%)
+Iowa St.         vs Tennessee St.    -> Iowa St.         (88.4%)
+
+--- Round of 32 ---
+Michigan         vs Saint Louis      -> Michigan         (78.9%)
+Texas Tech       vs Alabama          -> Texas Tech       (57.7%)
+Tennessee        vs Virginia         -> Virginia         (50.1%)
+Kentucky         vs Iowa St.         -> Iowa St.         (66.5%)
+
+--- Sweet 16 ---
+Michigan         vs Texas Tech       -> Michigan         (70.6%)
+Virginia         vs Iowa St.         -> Iowa St.         (52.0%)
+
+--- Elite 8 ---
+Michigan         vs Iowa St.         -> Michigan         (64.2%)
+
+================== FINAL FOUR ==================
+East Champ: Duke
+South Champ: Florida
+West Champ: Arizona
+Midwest Champ: Michigan
+
+--- National Semifinals ---
+Semifinal 1: Duke vs Florida -> Duke
+Semifinal 2: Arizona vs Michigan -> Michigan
+
+--- National Championship ---
+Duke vs Michigan -> Michigan WINS IT ALL!
